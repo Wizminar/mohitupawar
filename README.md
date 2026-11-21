@@ -16,13 +16,7 @@ assets/favicon.svg
 
 No framework and no build step. Fonts come from Google Fonts (Literata for text, Gaegu for handwriting).
 
-## Run it locally
-
-```bash
-python3 -m http.server 5481
-```
-
-Then open http://localhost:5481.
+(https://mohitupawar.com)
 
 ## Design
 
