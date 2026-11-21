@@ -57,7 +57,7 @@ Live at [mohitupawar.com](https://mohitupawar.com).
 These lines were written by Claude in Mohit's voice, or are assumptions. Confirm or edit them.
 
 - Contact links for **X** (`x.com/mohitupawar`) and **Instagram** (`instagram.com/mohitupawar`) assume the handle @mohitupawar. They're marked with a `CHECK` comment in `index.html`.
-- Margin notes: "our team name was a little too on the nose for a cyber student", "now I'm the person people message about the mess food", "built this while learning what a CSP even is", "length × log₂(pool). that one line changed how I make passwords", "good night, and thanks for reading this far".
+- Margin notes: "our team name was a little too on the nose for a cyber student", "built this while learning what a CSP even is", "length × log₂(pool). that one line changed how I make passwords", "good night, and thanks for reading this far".
 - About page: "Outside class I'm usually at a student meeting, on a football pitch, or holding a Rubik's cube."
 - Order of the first-semester entries (no dates are shown).
 - "Video editing, a few games with friends, and running."
