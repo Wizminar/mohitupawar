@@ -1,4 +1,4 @@
-# mohitupawar.com: website notes
+#(https://mohitupawar.com): website notes
 
 The personal site of Mohit Pawar, written as a journal: paper pages resting on a sky that moves from morning to night as you read.
 
