@@ -1,4 +1,4 @@
-# mohitupawar.com: website notes
+# [mohitupawar.com](https://mohitupawar.com): website notes
 
 The personal site of Mohit Pawar, written as a journal: paper pages resting on a sky that moves from morning to night as you read.
 
@@ -16,13 +16,7 @@ assets/favicon.svg
 
 No framework and no build step. Fonts come from Google Fonts (Literata for text, Gaegu for handwriting).
 
-## Run it locally
-
-```bash
-python3 -m http.server 5481
-```
-
-Then open http://localhost:5481.
+Live at [mohitupawar.com](https://mohitupawar.com).
 
 ## Design
 
