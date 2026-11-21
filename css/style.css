@@ -1,0 +1,807 @@
+/* ==========================================================
+   mohitupawar.com: a sky journal
+   Paper pages resting on a sky that moves from morning to night
+   as you read. One signature interaction: the sky (js/main.js).
+   ========================================================== */
+
+:root {
+  /* sky */
+  --morning: #CFE3FF;
+  --noon: #8DB8F2;
+  --dusk: #6C7FD8;
+  --night: #27306B;
+  --deep-night: #141A47;
+
+  /* paper and ink */
+  --paper: #FBFCFF;
+  --paper-edge: #E6EDFA;
+  --ink: #1E2547;
+  --ink-soft: #4A5378;
+  --pen: #3554B8;          /* handwritten notes, links */
+  --tape: rgba(141, 184, 242, 0.55);
+
+  /* type */
+  --serif: "Literata", Georgia, "Times New Roman", serif;
+  --hand: "Gaegu", "Comic Sans MS", cursive;
+
+  /* scale (classic 16 / 18 / 21 / 24 / 36 / 48 / 60) */
+  --fs-body: 1.0625rem;
+  --fs-small: 0.9375rem;
+  --fs-note: 1.3125rem;
+  --fs-h3: 1.375rem;
+  --fs-h2: clamp(1.875rem, 1.4rem + 1.6vw, 2.25rem);
+  --fs-h1: clamp(2.75rem, 1.9rem + 3.6vw, 3.75rem);
+
+  --page-pad: clamp(1.5rem, 0.6rem + 4vw, 4rem);
+  --margin-col: 13.5rem;
+  --gap: clamp(1.5rem, 1rem + 2vw, 3rem);
+
+  /* set by js: 0 at the cover, 1 at the last page */
+  --t: 0;
+}
+
+@media (min-width: 48em) {
+  :root { --fs-body: 1.125rem; }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--morning);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: var(--fs-body);
+  line-height: 1.75;
+  font-optical-sizing: auto;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { display: block; max-width: 100%; height: auto; }
+
+a {
+  color: var(--pen);
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+  text-decoration-color: rgba(53, 84, 184, 0.45);
+  transition: text-decoration-color 0.4s ease, text-decoration-thickness 0.4s ease;
+}
+a:hover { text-decoration-color: var(--pen); text-decoration-thickness: 2px; }
+
+:focus-visible {
+  outline: 3px dashed var(--pen);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+.skip {
+  position: absolute;
+  left: 1rem;
+  top: -4rem;
+  z-index: 20;
+  padding: 0.5rem 1rem;
+  background: var(--paper);
+  border-radius: 6px;
+  font-family: var(--hand);
+  font-size: var(--fs-note);
+}
+.skip:focus { top: 1rem; }
+
+/* ---------- the sky ---------- */
+
+.sky {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+.sky__layer { position: absolute; inset: 0; will-change: opacity; }
+.sky__morning { background: linear-gradient(180deg, #BcD7FF 0%, var(--morning) 45%, #F1F6FF 100%); }
+.sky__noon    { background: linear-gradient(180deg, #6FA2EC 0%, var(--noon) 50%, #D6E6FF 100%); opacity: 0; }
+.sky__dusk    { background: linear-gradient(180deg, #4A5BC0 0%, var(--dusk) 50%, #C3B4EE 100%); opacity: 0; }
+.sky__night   { background: linear-gradient(180deg, var(--deep-night) 0%, var(--night) 70%, #3B4690 100%); opacity: 0; }
+
+.sky__stars {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  will-change: opacity;
+  background-image:
+    radial-gradient(1.5px 1.5px at 12% 18%, #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 28% 42%, #fff 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 44% 12%, #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 63% 30%, #fff 50%, transparent 51%),
+    radial-gradient(2px 2px at 82% 16%, #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 90% 52%, #fff 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 7% 66%, #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 52% 70%, #fff 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 74% 84%, #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 20% 88%, #fff 50%, transparent 51%);
+}
+
+/* a second, fainter set of stars that breathes slowly */
+.sky__stars::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(1px 1px at 35% 24%, #fff 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 58% 8%, #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 70% 46%, #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 16% 40%, #fff 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 94% 30%, #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 40% 60%, #fff 50%, transparent 51%);
+  animation: twinkle 7s ease-in-out infinite alternate;
+}
+@keyframes twinkle { from { opacity: 0.15; } to { opacity: 0.9; } }
+
+/* one shooting star, when you reach the last page */
+.sky__meteor {
+  position: absolute;
+  top: 70vh;
+  right: 6vw;
+  width: 7rem;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #fff, rgba(255,255,255,0));
+  opacity: 0;
+  transform: rotate(-16deg);
+}
+.sky__meteor.is-falling { animation: meteor 1.6s 0.4s cubic-bezier(.3,.1,.5,1) forwards; }
+@keyframes meteor {
+  0%   { opacity: 0; transform: rotate(-16deg) translateX(0); }
+  15%  { opacity: 1; }
+  100% { opacity: 0; transform: rotate(-16deg) translateX(-14rem); }
+}
+
+.sky__orb {
+  position: absolute;
+  top: 0;
+  right: 9vw;
+  width: clamp(5rem, 9vw, 8rem);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 40%, #FFFBEA 0%, #FFF1C4 55%, rgba(255, 241, 196, 0) 72%);
+  box-shadow: 0 0 6rem 2rem rgba(255, 246, 214, 0.55);
+  will-change: transform;
+}
+.sky__orb.is-moon {
+  background: radial-gradient(circle at 42% 40%, #F4F6FF 0%, #DCE3FA 55%, rgba(220, 227, 250, 0) 72%);
+  box-shadow: 0 0 5rem 1rem rgba(200, 212, 255, 0.25);
+}
+
+.sky__cloud {
+  position: absolute;
+  height: 5rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.7);
+  filter: blur(18px);
+  will-change: transform, opacity;
+}
+.sky__cloud--one { width: 22rem; top: 14vh; left: -6rem; animation: drift 70s ease-in-out infinite alternate; }
+.sky__cloud--two { width: 16rem; top: 58vh; right: -4rem; background: rgba(255, 255, 255, 0.55); animation: drift 90s ease-in-out -30s infinite alternate-reverse; }
+@keyframes drift { from { translate: -3vw 0; } to { translate: 9vw 1vh; } }
+
+/* the clock: a little paper tag telling you the hour of the sky */
+.clock {
+  position: fixed;
+  left: 1.25rem;
+  bottom: 1.25rem;
+  z-index: 5;
+  margin: 0;
+  padding: 0.15rem 0.75rem 0.05rem;
+  background: var(--paper);
+  border-radius: 4px;
+  box-shadow: 0 6px 18px -8px rgba(20, 26, 71, 0.45);
+  font-family: var(--hand);
+  font-size: 1.25rem;
+  color: var(--pen);
+  transform: rotate(-3deg);
+}
+
+/* ---------- ribbon contents (wide screens only) ---------- */
+
+.ribbon { display: none; }
+
+@media (min-width: 86em) {
+  .ribbon {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: calc(50vw - 41.75rem);
+    z-index: 4;
+    width: 11rem;
+    padding: 2.5rem 1.1rem 2.25rem;
+    background: var(--paper);
+    box-shadow: 0 18px 40px -22px rgba(20, 26, 71, 0.55);
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 50% calc(100% - 1.1rem), 0 100%);
+  }
+  .ribbon__title {
+    margin: 0 0 0.5rem;
+    font-family: var(--hand);
+    font-size: var(--fs-note);
+    color: var(--ink-soft);
+  }
+  .ribbon ol { margin: 0; padding: 0; list-style: none; }
+  .ribbon li + li { margin-top: 0.35rem; }
+  .ribbon a {
+    display: inline-block;
+    font-size: var(--fs-small);
+    line-height: 1.4;
+    color: var(--ink-soft);
+    text-decoration: none;
+    background-image: linear-gradient(var(--pen), var(--pen));
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    background-size: 0 2px;
+    transition: background-size 0.8s ease, color 0.4s ease;
+  }
+  .ribbon a:hover { color: var(--ink); }
+  .ribbon a[aria-current="true"] { color: var(--ink); background-size: 100% 2px; }
+}
+
+/* ---------- pages ---------- */
+
+.journal {
+  width: min(100% - 2rem, 56rem);
+  margin: 0 auto;
+  padding: clamp(1rem, 4vw, 3.5rem) 0 2rem;
+}
+
+.page {
+  position: relative;
+  margin: 0 0 clamp(3rem, 8vw, 7rem);
+  padding: calc(var(--page-pad) + 0.5rem) var(--page-pad) var(--page-pad);
+  background-color: var(--paper);
+  /* a faint paper grain */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .12 0 0 0 0 .15 0 0 0 0 .3 0 0 0 .05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  border-radius: 3px 3px 14px 3px;
+  box-shadow:
+    0 1px 0 var(--paper-edge),
+    0 30px 60px -30px rgba(20, 26, 71, 0.45),
+    0 10px 20px -14px rgba(20, 26, 71, 0.25);
+  scroll-margin-top: 2rem;
+}
+.page:focus { outline: none; }
+
+@media (min-width: 60em) {
+  /* loose pages, not quite stacked straight */
+  .page:nth-child(even) { transform: translateX(1.25rem); }
+  .page:nth-child(odd)  { transform: translateX(-0.75rem); }
+}
+
+.folio {
+  position: absolute;
+  top: 1.1rem;
+  right: 1.5rem;
+  margin: 0;
+  font-family: var(--hand);
+  font-size: 1.2rem;
+  color: var(--ink-soft);
+}
+
+.page__title {
+  margin: 0 0 1.25rem;
+  font-size: var(--fs-h2);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.page__intro {
+  max-width: 34em;
+  margin: 0 0 2.5rem;
+  color: var(--ink-soft);
+  font-style: italic;
+}
+
+.prose { max-width: 34em; min-width: 0; }
+.prose p { margin: 0 0 1.1em; }
+.prose p:last-child { margin-bottom: 0; }
+
+.spread,
+.entry {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1rem;
+}
+
+.entry + .entry {
+  margin-top: 2.5rem;
+  padding-top: 2.5rem;
+  border-top: 1px dashed var(--paper-edge);
+}
+
+.entry h3,
+.desk h3 {
+  margin: 0 0 0.5rem;
+  font-size: var(--fs-h3);
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.5rem;
+  font-size: var(--fs-small);
+}
+
+/* ---------- handwritten margin notes ---------- */
+
+.note {
+  position: relative;
+  max-width: 22rem;
+  padding: 0.25rem 0 0.25rem 1rem;
+  border-left: 2px solid rgba(53, 84, 184, 0.25);
+  font-family: var(--hand);
+  font-size: var(--fs-note);
+  line-height: 1.3;
+  color: var(--pen);
+  transform: rotate(-1.2deg);
+  transform-origin: left top;
+}
+.note a { font-family: inherit; }
+
+.note__arrow {
+  display: none;
+  width: 3.25rem;
+  height: 2.25rem;
+  margin-top: 0.25rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@media (min-width: 52em) {
+  .spread,
+  .entry {
+    grid-template-columns: minmax(0, 1fr) var(--margin-col);
+    gap: var(--gap);
+    align-items: start;
+  }
+  .note {
+    padding: 0.4rem 0 0;
+    border-left: 0;
+    transform: rotate(-2.5deg);
+  }
+  .entry .note,
+  .spread .note { margin-top: 2.25rem; }
+  .entry > .note { grid-column: 2; grid-row: 1; }
+  .note__arrow { display: block; }
+}
+
+/* ---------- cover ---------- */
+
+.page--cover { padding-top: calc(var(--page-pad) + 1rem); }
+
+.cover {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 2rem;
+  align-items: center;
+}
+
+.cover__name {
+  margin: 0 0 1rem;
+  font-size: var(--fs-h1);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.cover__line {
+  max-width: 24em;
+  margin: 0;
+  font-size: 1.25rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+.photo {
+  position: relative;
+  justify-self: start;
+  width: min(15rem, 70%);
+  margin: 0.5rem 0 0 0.5rem;
+  padding: 0.6rem 0.6rem 2.1rem;
+  background: #fff;
+  box-shadow: 0 16px 32px -18px rgba(20, 26, 71, 0.55);
+  transform: rotate(2.5deg);
+}
+.photo img { aspect-ratio: 1; object-fit: cover; }
+.photo::before {
+  /* washi tape */
+  content: "";
+  position: absolute;
+  top: -0.9rem;
+  left: 50%;
+  width: 6.5rem;
+  height: 1.8rem;
+  background:
+    repeating-linear-gradient(45deg, rgba(255,255,255,.35) 0 6px, transparent 6px 12px),
+    var(--tape);
+  transform: translateX(-50%) rotate(-4deg);
+}
+
+.cover__lower {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.contents { max-width: 26rem; }
+.contents__title {
+  margin: 0 0 0.75rem;
+  font-size: var(--fs-h3);
+  font-weight: 500;
+}
+.contents ol { margin: 0; padding: 0; list-style: none; }
+.contents a {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding: 0.3rem 0;
+  color: var(--ink);
+  text-decoration: none;
+}
+.contents a span:first-child { text-decoration: underline; text-decoration-color: transparent; text-underline-offset: 0.22em; transition: text-decoration-color 0.4s ease; }
+.contents a:hover span:first-child { text-decoration-color: var(--pen); }
+.contents a::after {
+  /* dot leaders */
+  content: "";
+  order: 1;
+  flex: 1;
+  border-bottom: 2px dotted var(--paper-edge);
+  transform: translateY(-0.3em);
+}
+.contents__page {
+  order: 2;
+  font-family: var(--hand);
+  font-size: 1.25rem;
+  color: var(--pen);
+}
+
+.signature {
+  margin: 2.5rem 0 0;
+  font-family: var(--hand);
+  font-size: 1.5rem;
+  color: var(--ink-soft);
+}
+
+@media (min-width: 46em) {
+  .cover { grid-template-columns: minmax(0, 1fr) auto; gap: 3rem; }
+  .photo { justify-self: end; width: 14rem; margin: 0; }
+  .cover__lower { grid-template-columns: minmax(0, 1fr) var(--margin-col); gap: var(--gap); align-items: end; }
+  .signature { text-align: right; }
+}
+
+/* ---------- desk ---------- */
+
+.desk {
+  display: grid;
+  gap: 2rem;
+  max-width: 34em;
+}
+.desk__item p { margin: 0; }
+.offline { margin: 0; padding-left: 1.1rem; }
+.offline li + li { margin-top: 0.4rem; }
+.offline li::marker { color: var(--pen); }
+.note--desk { margin-top: 2.5rem; }
+
+@media (min-width: 52em) {
+  .note--desk {
+    position: absolute;
+    right: var(--page-pad);
+    top: 7rem;
+    width: var(--margin-col);
+    margin: 0;
+  }
+}
+
+/* ---------- write to me ---------- */
+
+.mail {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1rem;
+  margin: 1.75rem 0 !important;
+}
+.mail__address {
+  font-size: clamp(1.15rem, 0.9rem + 1.2vw, 1.5rem);
+  word-break: break-word;
+}
+.mail__copy {
+  padding: 0.3rem 0.95rem 0.2rem;
+  border: 1.5px solid var(--pen);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--pen);
+  font-family: var(--hand);
+  font-size: 1.15rem;
+  cursor: pointer;
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+.mail__copy:hover { background: var(--pen); color: var(--paper); }
+.mail__status { font-family: var(--hand); font-size: 1.15rem; color: var(--ink-soft); }
+
+.elsewhere { margin: 0; padding: 0; list-style: none; }
+.elsewhere li {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 0.75rem;
+  padding: 0.35rem 0;
+  border-bottom: 1px dashed var(--paper-edge);
+}
+.elsewhere span { color: var(--ink-soft); font-size: var(--fs-small); align-self: center; }
+
+/* ---------- footer (sits on the night sky) ---------- */
+
+.footer {
+  width: min(100% - 2rem, 56rem);
+  margin: 0 auto;
+  padding: 0 0 6rem;
+  color: #DCE3FA;
+  font-size: var(--fs-small);
+  text-align: center;
+}
+.footer p { margin: 0.25rem 0; }
+.footer a { color: #fff; text-decoration-color: rgba(255,255,255,.5); }
+.footer a:focus-visible { outline-color: #fff; }
+
+
+/* ---------- photos: polaroids taped into the journal ---------- */
+
+.snaps {
+  grid-column: 1 / -1;
+  max-width: 44rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem 1.25rem;
+  margin: 0.75rem 0 0.5rem;
+  padding: 0 0.25rem;
+}
+.snaps:has(> :nth-child(3)) { grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: none; }
+
+.snap {
+  position: relative;
+  margin: 0;
+  padding: 0.5rem 0.5rem 0.35rem;
+  background: #fff;
+  box-shadow: 0 14px 28px -16px rgba(20, 26, 71, 0.55), 0 2px 4px rgba(20, 26, 71, 0.06);
+  transform: rotate(var(--tilt, -2deg));
+  transition: transform 0.7s cubic-bezier(.2,.7,.2,1), box-shadow 0.7s ease;
+}
+.snap:nth-child(2) { --tilt: 1.6deg; margin-top: 0.75rem; }
+.snap:nth-child(3) { --tilt: -1deg; }
+.snap::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  top: -0.7rem;
+  left: 50%;
+  width: 4.5rem;
+  height: 1.4rem;
+  background:
+    repeating-linear-gradient(45deg, rgba(255,255,255,.35) 0 6px, transparent 6px 12px),
+    var(--tape);
+  transform: translateX(-50%) rotate(3deg);
+}
+.snap:nth-child(2)::before { transform: translateX(-50%) rotate(-5deg); }
+.snap:focus-within {
+  transform: rotate(0deg) translateY(-4px);
+  box-shadow: 0 22px 36px -18px rgba(20, 26, 71, 0.6), 0 2px 4px rgba(20, 26, 71, 0.06);
+}
+
+.snap__open {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: #E9EEF8;
+  cursor: zoom-in;
+}
+.snap__open img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+.snap figcaption {
+  padding: 0.35rem 0.1rem 0;
+  font-family: var(--hand);
+  font-size: 1.1rem;
+  line-height: 1.2;
+  color: var(--ink-soft);
+  text-align: center;
+}
+
+/* a photo "develops" the first time it scrolls into view */
+.js .develop img { filter: saturate(0.2) brightness(1.35) contrast(0.7) sepia(0.15) hue-rotate(180deg); transition: filter 2.4s ease-out; }
+.js .develop.is-developed img { filter: none; }
+
+@media (max-width: 30em) {
+  .snaps,
+  .snaps:has(> :nth-child(3)) { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem 0.9rem; }
+  .snap:nth-child(3) { grid-column: 1 / -1; width: 62%; justify-self: center; }
+  .snap figcaption { font-size: 1rem; }
+}
+
+/* ---------- project screenshots in a little browser window ---------- */
+
+.window {
+  display: block;
+  text-decoration: none;
+  margin: 1.5rem 0 1.1rem;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #0E1424;
+  box-shadow: 0 24px 40px -24px rgba(20, 26, 71, 0.7), 0 0 0 1px rgba(30, 37, 71, 0.08);
+  transform: rotate(-0.6deg);
+  transition: transform 0.8s cubic-bezier(.2,.7,.2,1), box-shadow 0.8s ease;
+}
+.entry:nth-of-type(even) .window { transform: rotate(0.6deg); }
+@media (hover: hover) {
+  .snap:hover,
+  .entry .window:hover { transform: rotate(0deg) translateY(-4px); }
+  .snap:hover { box-shadow: 0 22px 36px -18px rgba(20, 26, 71, 0.6), 0 2px 4px rgba(20, 26, 71, 0.06); }
+}
+.window:focus-visible { transform: none; }
+.window__bar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  background: #EEF3FC;
+  border-bottom: 1px solid var(--paper-edge);
+}
+.window__dots {
+  width: 2.6rem;
+  height: 0.6rem;
+  background:
+    radial-gradient(circle at 0.3rem 50%, #F2A7A7 0.28rem, transparent 0.3rem),
+    radial-gradient(circle at 1.3rem 50%, #F5D58A 0.28rem, transparent 0.3rem),
+    radial-gradient(circle at 2.3rem 50%, #A8D8A8 0.28rem, transparent 0.3rem);
+}
+.window__url {
+  flex: 1;
+  min-width: 0;
+  padding: 0.05rem 0.6rem;
+  border-radius: 999px;
+  background: var(--paper);
+  font-size: 0.8125rem;
+  color: var(--ink-soft);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ---------- lightbox ---------- */
+
+.lightbox {
+  width: fit-content;
+  max-width: 92vw;
+  max-height: 92vh;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  overflow: visible;
+}
+.lightbox::backdrop {
+  background: rgba(20, 26, 71, 0.55);
+  backdrop-filter: blur(6px);
+}
+.lightbox[open] .lightbox__frame { animation: lift 0.6s cubic-bezier(.2,.7,.2,1); }
+@keyframes lift {
+  from { opacity: 0; transform: translateY(1.5rem) rotate(-2deg) scale(0.96); }
+  to   { opacity: 1; transform: none; }
+}
+.lightbox__frame {
+  margin: 0;
+  padding: 0.75rem 0.75rem 0.5rem;
+  background: #fff;
+  box-shadow: 0 40px 80px -30px rgba(0, 0, 0, 0.6);
+}
+.lightbox__img {
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  width: auto;
+  max-width: min(calc(92vw - 1.5rem), 60rem);
+  max-height: calc(92vh - 9rem);
+}
+.lightbox__img.is-shown { opacity: 1; }
+.lightbox__caption {
+  padding: 0.5rem 0 0.15rem;
+  font-family: var(--hand);
+  font-size: 1.4rem;
+  color: var(--ink-soft);
+  text-align: center;
+}
+.lightbox__controls {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+.lightbox__controls button {
+  min-width: 2.75rem;
+  padding: 0.3rem 1rem 0.2rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--paper);
+  color: var(--pen);
+  font-family: var(--hand);
+  font-size: 1.3rem;
+  line-height: 1.2;
+  cursor: pointer;
+}
+.lightbox__controls button:focus-visible { outline-color: #fff; }
+
+/* ---------- small doodles ---------- */
+
+.doodle {
+  display: block;
+  width: 3.5rem;
+  height: 3.5rem;
+  margin-bottom: 0.35rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* the cover, on load: the photo is set down, then the note writes itself */
+.js .page--cover .photo { animation: place 1.3s 0.15s cubic-bezier(.2,.8,.25,1) backwards; }
+@keyframes place {
+  from { opacity: 0; transform: translateY(-1.25rem) rotate(9deg) scale(1.04); box-shadow: 0 40px 50px -20px rgba(20, 26, 71, 0.3); }
+  to   { opacity: 1; transform: rotate(2.5deg); }
+}
+/* the cover note writes itself once, on load */
+.js .note--cover { clip-path: inset(0 100% 0 0); animation: write 2.4s 1.2s cubic-bezier(.5,0,.3,1) forwards; }
+@keyframes write { to { clip-path: inset(0 -10% 0 0); } }
+
+/* ---------- small screens ---------- */
+
+@media (max-width: 30em) {
+  .journal, .footer { width: calc(100% - 2rem); }
+  .page { padding: 3rem 1.25rem 1.75rem; }
+  /* on phones the clock would sit over the text, so it only shows while you scroll */
+  .clock {
+    left: auto;
+    right: 0.9rem;
+    bottom: 0.9rem;
+    font-size: 1.1rem;
+    opacity: 0;
+    transition: opacity 0.9s ease;
+  }
+  .clock.is-awake { opacity: 1; transition-duration: 0.3s; }
+}
+
+/* ---------- motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+  .sky__cloud { transform: none !important; }
+  .js .note--cover { clip-path: none; animation: none; }
+  .js .page--cover .photo { animation: none; }
+  .sky__cloud, .sky__stars::after { animation: none; }
+  .sky__meteor { display: none; }
+  .lightbox[open] .lightbox__frame { animation: none; }
+  .js .develop img { filter: none; }
+  .snap, .window { transition: none; }
+}

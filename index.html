@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mohit Pawar</title>
+  <meta name="description" content="The personal journal of Mohit Pawar, an inaugural-batch cybersecurity major at IIT Kanpur.">
+  <meta name="theme-color" content="#CFE3FF">
+  <meta property="og:title" content="Mohit Pawar">
+  <meta property="og:description" content="Inaugural-batch cybersecurity major at IIT Kanpur. Curious by nature, building by choice.">
+  <meta property="og:image" content="https://mohitupawar.com/assets/mohit.jpg">
+  <meta property="og:url" content="https://mohitupawar.com/">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;1,7..72,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script>document.documentElement.className = "js";</script>
+</head>
+<body>
+  <a class="skip" href="#cover">Skip to the journal</a>
+
+  <!-- The sky behind the pages. It moves from morning to night as you scroll (js/main.js). -->
+  <div class="sky" aria-hidden="true">
+    <div class="sky__layer sky__morning"></div>
+    <div class="sky__layer sky__noon"></div>
+    <div class="sky__layer sky__dusk"></div>
+    <div class="sky__layer sky__night"></div>
+    <div class="sky__stars"></div>
+    <div class="sky__orb"></div>
+    <div class="sky__cloud sky__cloud--one"></div>
+    <div class="sky__cloud sky__cloud--two"></div>
+    <div class="sky__meteor"></div>
+  </div>
+
+  <p class="clock" aria-hidden="true"><span class="clock__time">7:00 am</span></p>
+
+  <nav class="ribbon" aria-label="Contents">
+    <p class="ribbon__title">contents</p>
+    <ol>
+      <li><a href="#about">A bit about me</a></li>
+      <li><a href="#semester">First semester</a></li>
+      <li><a href="#built">Things I built</a></li>
+      <li><a href="#desk">On my desk</a></li>
+      <li><a href="#write">Write to me</a></li>
+    </ol>
+  </nav>
+
+  <main class="journal">
+
+    <!-- Cover -->
+    <article class="page page--cover" id="cover" tabindex="-1">
+      <p class="folio">p. i</p>
+      <div class="cover">
+        <div class="cover__text">
+          <h1 class="cover__name">Mohit Pawar</h1>
+          <p class="cover__line">Inaugural-batch cybersecurity major at IIT&nbsp;Kanpur. Curious by nature, building by choice.</p>
+        </div>
+        <figure class="photo develop">
+          <img src="assets/mohit.jpg" width="640" height="640" fetchpriority="high" alt="Mohit smiling, outdoors at night, in a dark sweater with a white collar.">
+        </figure>
+      </div>
+
+      <div class="cover__lower">
+        <nav class="contents" aria-label="Table of contents">
+          <h2 class="contents__title">Contents</h2>
+          <ol>
+            <li><a href="#about"><span>A bit about me</span><span class="contents__page">1</span></a></li>
+            <li><a href="#semester"><span>First semester</span><span class="contents__page">2</span></a></li>
+            <li><a href="#built"><span>Things I built</span><span class="contents__page">3</span></a></li>
+            <li><a href="#desk"><span>On my desk</span><span class="contents__page">4</span></a></li>
+            <li><a href="#write"><span>Write to me</span><span class="contents__page">5</span></a></li>
+          </ol>
+        </nav>
+        <aside class="note note--cover">
+          hi :) this is my journal.<br>
+          keep scrolling, the sky changes as you read.
+          <svg class="note__arrow" viewBox="0 0 60 40" aria-hidden="true"><path d="M4 6 C 20 4, 34 14, 30 30 M22 24 L30 32 L36 22"/></svg>
+        </aside>
+      </div>
+      <p class="signature">@mohitupawar</p>
+    </article>
+
+    <!-- 1. About -->
+    <article class="page" id="about">
+      <p class="folio">p. 1</p>
+      <h2 class="page__title">A bit about me</h2>
+      <div class="spread">
+        <div class="prose">
+          <p>I'm in the first batch of the Bachelor of Cybersecurity programme at IIT Kanpur. Thirty-odd of us, a brand new degree, and no senior batch to ask for directions.</p>
+          <p>I like understanding technology beyond the surface: how systems are designed, how they break, and how they can be made better. Cybersecurity is where I've started, mostly web security, Linux and the systems underneath, but I see it as a way into computing as a whole.</p>
+          <p>I got here through web development. HTML, CSS and JavaScript first, then a growing curiosity about how the web actually works, then the question of what keeps it secure, private and trustworthy. These days I learn by building small tools and taking them apart.</p>
+          <p>Outside class I'm usually at a student meeting, on a football pitch, or holding a Rubik's cube. I'm still figuring out where I want to specialise, and I'm enjoying that part.</p>
+        </div>
+        <aside class="note">
+          the name WizMinar? a gaming username I made up when I was 11. I still don't know what it means.
+          <a href="https://wizminar.com">wizminar.com</a> is where I post about tech.
+        </aside>
+      </div>
+    </article>
+
+    <!-- 2. First semester -->
+    <article class="page" id="semester">
+      <p class="folio">p. 2</p>
+      <h2 class="page__title">First semester</h2>
+      <p class="page__intro">Autumn 2026, my first months at IIT Kanpur.</p>
+
+      <section class="entry" aria-labelledby="e-c3i">
+        <div class="prose">
+          <h3 id="e-c3i">First batch, no map</h3>
+          <p>Our B.Cyber batch got to sit down with Prof. Manindra Agrawal, the Director, and the team at C3iHub, the institute's cybersecurity innovation hub. We asked questions, and instead of polished answers we were told something better: the path for a first batch isn't drawn yet, so we get to draw it.</p>
+        </div>
+        <div class="snaps">
+          <figure class="snap develop">
+            <button class="snap__open" type="button" aria-label="Open photo: C3iHub, before everyone sat down">
+              <img src="assets/photos/c3ihub-room.jpg" width="1000" height="733" alt="The C3iHub hall at IIT Kanpur: wood-panelled walls, the C3iHub logo on a large screen and a long mustard sofa." loading="lazy" decoding="async">
+            </button>
+            <figcaption>C3iHub, before everyone sat down</figcaption>
+          </figure>
+          <figure class="snap develop">
+            <button class="snap__open" type="button" aria-label="Open photo: the first B.Cyber batch">
+              <img src="assets/photos/c3ihub-batch.jpg" width="1100" height="823" alt="About thirty students of the first B.Cyber batch posing together in a group photo at C3iHub." loading="lazy" decoding="async">
+            </button>
+            <figcaption>the first B.Cyber batch</figcaption>
+          </figure>
+        </div>
+        <aside class="note">some evenings you don't forget. this was one.</aside>
+      </section>
+
+      <section class="entry" aria-labelledby="e-techkriti">
+        <div class="prose">
+          <h3 id="e-techkriti">Junior executive, Techkriti PR</h3>
+          <p>I joined the public relations team of Techkriti, one of IIT Kanpur's big technical festivals. Outreach, emails, coordination, and a crash course in talking to people outside campus on behalf of something bigger than me.</p>
+        </div>
+      </section>
+
+      <section class="entry" aria-labelledby="e-matrix">
+        <div class="prose">
+          <h3 id="e-matrix">The Matrix wins the scavenger hunt</h3>
+          <p>At Product Club IITK's Product Hunt '26, my team, The Matrix, with Navjot, Ojas and Kriti, won the scavenger hunt. One of the most fun afternoons I've had with a team.</p>
+        </div>
+        <div class="snaps">
+          <figure class="snap develop">
+            <button class="snap__open" type="button" aria-label="Open photo: The Matrix, mid-hunt">
+              <img src="assets/photos/matrix-team.jpg" width="1000" height="748" alt="Four friends in a lecture hall flashing peace signs at the camera, Mohit in the middle with a laptop." loading="lazy" decoding="async">
+            </button>
+            <figcaption>The Matrix, mid-hunt</figcaption>
+          </figure>
+          <figure class="snap develop">
+            <button class="snap__open" type="button" aria-label="Open photo: demo time at Product Hunt '26">
+              <img src="assets/photos/matrix-laptop.jpg" width="824" height="712" alt="Mohit smiling and holding up a laptop in front of the Product Club IITK Product Hunt banner." loading="lazy" decoding="async">
+            </button>
+            <figcaption>demo time at Product Hunt '26</figcaption>
+          </figure>
+        </div>
+        <aside class="note">our team name was a little too on the nose for a cyber student.</aside>
+      </section>
+
+      <section class="entry" aria-labelledby="e-senator">
+        <div class="prose">
+          <h3 id="e-senator">Elected senator</h3>
+          <p>I was elected Undergraduate First-Year Senator (BT/BS Y26) in the Students' Gymkhana. What I campaigned on: easier access to student support, better essential facilities on campus, campus platforms that actually work together, and stronger student welfare.</p>
+        </div>
+        <aside class="note">now I'm the person people message about the mess food.</aside>
+      </section>
+
+      <section class="entry" aria-labelledby="e-quantile">
+        <div class="prose">
+          <h3 id="e-quantile">A puzzle called LUCIFER</h3>
+          <p>At the launch of Quantile 2027, the Programming Club's intercollegiate quant championship, everyone got a different puzzle to crack. Ojas and I didn't win, but we walked away happy with some Jane Street merch.</p>
+        </div>
+        <div class="snaps">
+          <figure class="snap develop">
+            <button class="snap__open" type="button" aria-label="Open photo: LUCIFER on the big screen">
+              <img src="assets/photos/quantile-lucifer.jpg" width="1000" height="748" alt="A lecture hall projector showing the LUCIFER puzzle with a 05:41 countdown." loading="lazy" decoding="async">
+            </button>
+            <figcaption>LUCIFER on the big screen</figcaption>
+          </figure>
+          <figure class="snap develop">
+            <button class="snap__open" type="button" aria-label="Open photo: Ojas and me, before the puzzles">
+              <img src="assets/photos/quantile-ojas.jpg" width="900" height="673" alt="A selfie of Mohit and Ojas in a packed lecture hall." loading="lazy" decoding="async">
+            </button>
+            <figcaption>Ojas and me, before the puzzles</figcaption>
+          </figure>
+          <figure class="snap develop">
+            <button class="snap__open" type="button" aria-label="Open photo: the Jane Street merch">
+              <img src="assets/photos/quantile-merch.jpg" width="800" height="657" alt="A rolled-up Jane Street t-shirt lying on a patterned bedsheet." loading="lazy" decoding="async">
+            </button>
+            <figcaption>the Jane Street merch</figcaption>
+          </figure>
+        </div>
+      </section>
+    </article>
+
+    <!-- 3. Things I built -->
+    <article class="page" id="built">
+      <p class="folio">p. 3</p>
+      <h2 class="page__title">Things I built</h2>
+      <p class="page__intro">Three small tools I made to understand security and privacy by actually implementing them. Each one is live, and the source is open.</p>
+
+      <section class="entry" aria-labelledby="b-sentinel">
+        <div class="prose">
+          <h3 id="b-sentinel">Sentinel</h3>
+          <p>Security headers are the cheapest defence a website has, and the easiest to forget, because nobody sees them. Sentinel checks a site for six of them (CSP, HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy and Permissions-Policy), marks each as present, weak or missing, and explains in plain English what it protects against.</p>
+          <a class="window" href="https://sentinel.mohitupawar.com" tabindex="-1" aria-hidden="true">
+            <span class="window__bar"><span class="window__dots"></span><span class="window__url">sentinel.mohitupawar.com</span></span>
+            <img src="assets/tools/sentinel.jpg" width="1200" height="560" alt="" loading="lazy" decoding="async">
+          </a>
+          <p class="links"><a href="https://sentinel.mohitupawar.com">Try Sentinel</a> <a href="https://github.com/Wizminar/Sentinel">Read the source</a></p>
+        </div>
+        <aside class="note">built this while learning what a CSP even is.</aside>
+      </section>
+
+      <section class="entry" aria-labelledby="b-cipher">
+        <div class="prose">
+          <h3 id="b-cipher">Cipher</h3>
+          <p>A password checker that measures strength in bits of entropy rather than "has a symbol". It shows why a long passphrase beats a short scramble, and checks for known breaches using k-anonymity, so your password never leaves the browser.</p>
+          <a class="window" href="https://cipher.mohitupawar.com" tabindex="-1" aria-hidden="true">
+            <span class="window__bar"><span class="window__dots"></span><span class="window__url">cipher.mohitupawar.com</span></span>
+            <img src="assets/tools/cipher.jpg" width="1200" height="675" alt="" loading="lazy" decoding="async">
+          </a>
+          <p class="links"><a href="https://cipher.mohitupawar.com">Try Cipher</a> <a href="https://github.com/Wizminar/Cipher">Read the source</a></p>
+        </div>
+        <aside class="note">length × log₂(pool). that one line changed how I make passwords.</aside>
+      </section>
+
+      <section class="entry" aria-labelledby="b-permute">
+        <div class="prose">
+          <h3 id="b-permute">Permute</h3>
+          <p>Most online file converters upload your file to someone else's server. Permute converts files right in your browser, so nothing is uploaded. You don't have to trust me on that: open the network panel and watch.</p>
+          <a class="window" href="https://permute.mohitupawar.com" tabindex="-1" aria-hidden="true">
+            <span class="window__bar"><span class="window__dots"></span><span class="window__url">permute.mohitupawar.com</span></span>
+            <img src="assets/tools/permute.jpg" width="1000" height="440" alt="" loading="lazy" decoding="async">
+          </a>
+          <p class="links"><a href="https://permute.mohitupawar.com">Try Permute</a> <a href="https://github.com/Wizminar/permute">Read the source</a></p>
+        </div>
+      </section>
+    </article>
+
+    <!-- 4. On my desk -->
+    <article class="page" id="desk">
+      <p class="folio">p. 4</p>
+      <h2 class="page__title">On my desk</h2>
+      <div class="desk">
+        <section class="desk__item" aria-labelledby="d-reading">
+          <h3 id="d-reading">Reading</h3>
+          <p><cite>Zero to One</cite> by Peter Thiel.</p>
+        </section>
+        <section class="desk__item" aria-labelledby="d-learning">
+          <h3 id="d-learning">Going deep on</h3>
+          <p>Web security: security headers, authentication and JWTs, browser security, the basics of cryptography, and the Linux and networking underneath it all.</p>
+        </section>
+        <section class="desk__item" aria-labelledby="d-off">
+          <h3 id="d-off">Away from the screen</h3>
+          <ul class="offline">
+            <li>Football, mostly in goal. Barcelona fan, and my favourite keeper is Manuel Neuer.</li>
+            <li>Speedcubing.</li>
+            <li>Video editing, a few games with friends, and running.</li>
+          </ul>
+        </section>
+      </div>
+      <aside class="note note--desk">
+        <svg class="doodle" viewBox="0 0 80 80" aria-hidden="true"><path d="M40 8 L70 23 L70 57 L40 72 L10 57 L10 23 Z M10 23 L40 38 L70 23 M40 38 L40 72 M20 28 L50 13 M30 33 L60 18 M10 34.5 L40 49.5 L70 34.5 M10 46 L40 61 L70 46 M20 28.5 L20 62 M30 33.5 L30 67 M50 33.5 L50 67 M60 28.5 L60 62"/></svg>
+        cube PB: ~45s. coming down, slowly.
+      </aside>
+    </article>
+
+    <!-- 5. Write to me -->
+    <article class="page page--last" id="write">
+      <p class="folio">p. 5</p>
+      <h2 class="page__title">Write to me</h2>
+      <div class="spread">
+        <div class="prose">
+          <p>I'm always happy to hear from people working on interesting ideas in technology, security, systems or research, or anyone who just wants to talk about student initiatives or football.</p>
+          <p class="mail">
+            <a class="mail__address" href="mailto:mohitupawar@gmail.com">mohitupawar@gmail.com</a>
+            <button class="mail__copy" type="button" data-copy="mohitupawar@gmail.com">Copy email</button>
+            <span class="mail__status" role="status" aria-live="polite"></span>
+          </p>
+          <ul class="elsewhere">
+            <li><a href="https://www.linkedin.com/in/mohitupawar">LinkedIn</a> <span>@mohitupawar</span></li>
+            <!-- CHECK: X and Instagram links assume the handle @mohitupawar. Confirm these accounts are yours. -->
+            <li><a href="https://x.com/mohitupawar">X</a> <span>@mohitupawar</span></li>
+            <li><a href="https://www.instagram.com/mohitupawar/">Instagram</a> <span>@mohitupawar</span></li>
+            <li><a href="https://github.com/Wizminar">GitHub</a> <span>Wizminar</span></li>
+          </ul>
+        </div>
+        <aside class="note">good night, and thanks for reading this far.</aside>
+      </div>
+    </article>
+  </main>
+
+  <dialog class="lightbox" aria-label="Photo">
+    <figure class="lightbox__frame">
+      <img class="lightbox__img" src="" alt="">
+      <figcaption class="lightbox__caption"></figcaption>
+    </figure>
+    <div class="lightbox__controls">
+      <button class="lightbox__prev" type="button" aria-label="Previous photo">‹</button>
+      <button class="lightbox__close" type="button">Close</button>
+      <button class="lightbox__next" type="button" aria-label="Next photo">›</button>
+    </div>
+  </dialog>
+
+  <footer class="footer">
+    <p><a href="#cover">Back to the cover</a></p>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

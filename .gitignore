@@ -1,0 +1,14 @@
+# macOS
+.DS_Store
+
+# Claude Code local settings
+.claude/
+
+# Raw / source assets (originals before export). Only optimised files in assets/ ship.
+raw/
+source-assets/
+assets/raw/
+assets/source/
+*.psd
+*.fig
+*.afdesign
