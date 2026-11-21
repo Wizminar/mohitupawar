@@ -45,6 +45,7 @@ Then open http://localhost:5481.
 - Polaroid photos "develop" from a pale blue wash into full colour the first time they scroll into view.
 - Clicking a polaroid opens it in a lightbox (native `<dialog>`). Arrow keys flip through photos, the image crossfades, and Esc closes it.
 - Polaroids and project windows straighten and lift on hover (only on devices with a mouse).
+- "On my desk" has hand-drawn stickers in the same pen colour: a *Zero to One* book, a padlock, a football, a goalkeeper glove, a scarf in Barça stripes (`#A50044` / `#004D98`) and a Rubik's cube. They're inline SVGs in `index.html`, so there's nothing extra to load.
 
 **Performance:** the sky script measures the page only on resize (via `ResizeObserver`), skips frames where the scroll position hasn't changed, and animates only `opacity` and `transform`. The cover photo loads with `fetchpriority="high"`, and every other image is lazy-loaded.
 

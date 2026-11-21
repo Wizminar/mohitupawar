@@ -243,26 +243,78 @@
       <h2 class="page__title">On my desk</h2>
       <div class="desk">
         <section class="desk__item" aria-labelledby="d-reading">
-          <h3 id="d-reading">Reading</h3>
-          <p><cite>Zero to One</cite> by Peter Thiel.</p>
+          <svg class="sticker sticker--book" viewBox="0 0 100 110" aria-hidden="true">
+            <path d="M26 14 h48 a4 4 0 0 1 4 4 v74 a4 4 0 0 1 -4 4 h-48 z" class="sticker__paper"/>
+            <path d="M26 14 h48 a4 4 0 0 1 4 4 v74 a4 4 0 0 1 -4 4 h-48 z M34 14 v82" class="sticker__line"/>
+            <path d="M26 96 q-6 0 -6 -6 v-70 q0 -6 6 -6" class="sticker__line"/>
+            <path d="M22 92 h4" class="sticker__line"/>
+            <text x="56" y="44" class="sticker__title">Zero</text>
+            <text x="56" y="58" class="sticker__title sticker__title--small">to</text>
+            <text x="56" y="74" class="sticker__title">One</text>
+            <path d="M44 84 h24" class="sticker__line sticker__line--thin"/>
+            <path d="M62 96 v12 l4 -4 l4 4 v-12" class="sticker__ribbon"/>
+          </svg>
+          <div>
+            <h3 id="d-reading">Reading</h3>
+            <p><cite>Zero to One</cite> by Peter Thiel.</p>
+          </div>
         </section>
         <section class="desk__item" aria-labelledby="d-learning">
-          <h3 id="d-learning">Going deep on</h3>
-          <p>Web security: security headers, authentication and JWTs, browser security, the basics of cryptography, and the Linux and networking underneath it all.</p>
+          <svg class="sticker sticker--lock" viewBox="0 0 100 100" aria-hidden="true">
+            <path d="M34 46 v-12 a16 16 0 0 1 32 0 v12" class="sticker__line sticker__line--thick"/>
+            <rect x="24" y="44" width="52" height="40" rx="7" class="sticker__paper"/>
+            <rect x="24" y="44" width="52" height="40" rx="7" class="sticker__line"/>
+            <circle cx="50" cy="60" r="5" class="sticker__ink-fill"/>
+            <path d="M50 64 v9" class="sticker__line sticker__line--thick"/>
+          </svg>
+          <div>
+            <h3 id="d-learning">Going deep on</h3>
+            <p>Web security: security headers, authentication and JWTs, browser security, the basics of cryptography, and the Linux and networking underneath it all.</p>
+          </div>
         </section>
         <section class="desk__item" aria-labelledby="d-off">
-          <h3 id="d-off">Away from the screen</h3>
-          <ul class="offline">
-            <li>Football, mostly in goal. Barcelona fan, and my favourite keeper is Manuel Neuer.</li>
-            <li>Speedcubing.</li>
-            <li>Video editing, a few games with friends, and running.</li>
-          </ul>
+          <svg class="sticker sticker--ball" viewBox="0 0 100 100" aria-hidden="true">
+              <defs><clipPath id="ballclip"><circle cx="50" cy="50" r="34"/></clipPath></defs>
+              <circle cx="50" cy="50" r="34" class="sticker__paper"/>
+              <g clip-path="url(#ballclip)" class="sticker__ink-fill"><polygon points="50.0,24.0 39.5,16.4 43.5,4.1 56.5,4.1 60.5,16.4"/><polygon points="74.7,42.0 78.7,29.7 91.7,29.7 95.7,42.0 85.2,49.6"/><polygon points="65.3,71.0 78.2,71.0 82.2,83.3 71.7,90.9 61.3,83.3"/><polygon points="34.7,71.0 38.7,83.3 28.3,90.9 17.8,83.3 21.8,71.0"/><polygon points="25.3,42.0 14.8,49.6 4.3,42.0 8.3,29.7 21.3,29.7"/></g>
+              <polygon points="50.0,38.0 61.4,46.3 57.1,59.7 42.9,59.7 38.6,46.3" class="sticker__ink-fill"/>
+              <path d="M50.0 38.0 L50.0 25.0 M61.4 46.3 L73.8 42.3 M57.1 59.7 L64.7 70.2 M42.9 59.7 L35.3 70.2 M38.6 46.3 L26.2 42.3 M50.0 25.0 L67.6 25.7 L70.6 21.7 M73.8 42.3 L78.5 59.3 L83.3 60.8 M64.7 70.2 L50.0 80.0 L50.0 85.0 M35.3 70.2 L21.5 59.3 L16.7 60.8 M26.2 42.3 L32.4 25.7 L29.4 21.7" class="sticker__line"/>
+              <circle cx="50" cy="50" r="34" class="sticker__line"/>
+            </svg>
+          <div>
+            <h3 id="d-off">Away from the screen</h3>
+            <ul class="offline">
+              <li>Football, mostly in goal. Barcelona fan, and my favourite keeper is Manuel Neuer.</li>
+              <li>Speedcubing.</li>
+              <li>Video editing, a few games with friends, and running.</li>
+            </ul>
+            <div class="stickers" aria-hidden="true">
+              <svg class="sticker sticker--glove" viewBox="0 0 100 100" aria-hidden="true">
+              <g class="sticker__paper sticker__line">
+                <ellipse cx="25" cy="56" rx="7.5" ry="15" transform="rotate(-32 25 56)"/>
+                <rect x="31" y="14" width="10" height="36" rx="5"/>
+                <rect x="42" y="9" width="10" height="40" rx="5"/>
+                <rect x="53" y="11" width="10" height="38" rx="5"/>
+                <rect x="64" y="18" width="9" height="32" rx="4.5"/>
+                <rect x="29" y="38" width="46" height="36" rx="11"/>
+                <rect x="33" y="72" width="38" height="16" rx="3"/>
+              </g>
+              <path d="M33 79 h38" class="sticker__accent"/>
+            </svg>
+              <svg class="sticker sticker--scarf" viewBox="0 0 100 100" aria-hidden="true">
+              <defs><pattern id="blaugrana" width="16" height="16" patternUnits="userSpaceOnUse"><rect width="8" height="16" fill="#A50044"/><rect x="8" width="8" height="16" fill="#004D98"/></pattern></defs>
+              <g transform="rotate(-24 50 50)">
+                <rect x="6" y="40" width="88" height="20" rx="2" fill="url(#blaugrana)"/>
+                <rect x="6" y="40" width="88" height="20" rx="2" class="sticker__line"/>
+                <path d="M6 43 h-6 M6 48 h-6 M6 53 h-6 M6 58 h-6 M94 43 h6 M94 48 h6 M94 53 h6 M94 58 h6" class="sticker__line sticker__line--thin"/>
+              </g>
+            </svg>
+              <svg class="sticker sticker--cube" viewBox="0 0 80 80" aria-hidden="true"><path d="M40 8 L70 23 L70 57 L40 72 L10 57 L10 23 Z M10 23 L40 38 L70 23 M40 38 L40 72 M20 28 L50 13 M30 33 L60 18 M10 34.5 L40 49.5 L70 34.5 M10 46 L40 61 L70 46 M20 28.5 L20 62 M30 33.5 L30 67 M50 33.5 L50 67 M60 28.5 L60 62" class="sticker__line"/></svg>
+            </div>
+          </div>
         </section>
       </div>
-      <aside class="note note--desk">
-        <svg class="doodle" viewBox="0 0 80 80" aria-hidden="true"><path d="M40 8 L70 23 L70 57 L40 72 L10 57 L10 23 Z M10 23 L40 38 L70 23 M40 38 L40 72 M20 28 L50 13 M30 33 L60 18 M10 34.5 L40 49.5 L70 34.5 M10 46 L40 61 L70 46 M20 28.5 L20 62 M30 33.5 L30 67 M50 33.5 L50 67 M60 28.5 L60 62"/></svg>
-        cube PB: ~45s. coming down, slowly.
-      </aside>
+      <aside class="note note--desk">cube PB: ~45s. coming down, slowly.</aside>
     </article>
 
     <!-- 5. Write to me -->

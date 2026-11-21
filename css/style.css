@@ -490,13 +490,77 @@ a:hover { text-decoration-color: var(--pen); text-decoration-thickness: 2px; }
 
 .desk {
   display: grid;
-  gap: 2rem;
-  max-width: 34em;
+  gap: 2.5rem;
+  max-width: 38em;
+}
+.desk__item {
+  display: grid;
+  grid-template-columns: 6rem minmax(0, 1fr);
+  gap: 1.5rem;
+  align-items: start;
 }
 .desk__item p { margin: 0; }
 .offline { margin: 0; padding-left: 1.1rem; }
 .offline li + li { margin-top: 0.4rem; }
 .offline li::marker { color: var(--pen); }
+
+/* hand-drawn stickers, in the same pen as the margin notes */
+.sticker {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  transform: rotate(var(--tilt, -4deg));
+  transition: transform 0.9s cubic-bezier(.2,.7,.2,1);
+}
+.sticker--lock { --tilt: 5deg; }
+.sticker--ball { --tilt: 0deg; }
+.sticker__paper { fill: #fff; }
+.sticker__line {
+  fill: none;
+  stroke: var(--pen);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.sticker__line--thin { stroke-width: 1.6; }
+.sticker__line--thick { stroke-width: 4; }
+.sticker__paper.sticker__line, .sticker__paper .sticker__line { fill: #fff; }
+.sticker__ink-fill { fill: var(--pen); }
+.sticker__accent { fill: none; stroke: #8DB8F2; stroke-width: 5; stroke-linecap: round; }
+.sticker__ribbon { fill: #8DB8F2; stroke: var(--pen); stroke-width: 1.6; stroke-linejoin: round; }
+.sticker__title {
+  font-family: var(--hand);
+  font-size: 17px;
+  font-weight: 700;
+  fill: var(--pen);
+  text-anchor: middle;
+}
+.sticker__title--small { font-size: 12px; font-weight: 400; }
+.sticker--book .sticker__paper { fill: #EEF3FC; }
+
+.stickers {
+  display: flex;
+  align-items: center;
+  gap: 1.75rem;
+  margin-top: 1.5rem;
+}
+.stickers .sticker { width: 4.75rem; }
+.stickers .sticker--glove { --tilt: -10deg; }
+.stickers .sticker--scarf { --tilt: 0deg; width: 6rem; }
+.stickers .sticker--cube { --tilt: 8deg; width: 4.25rem; }
+
+@media (hover: hover) {
+  .desk__item:hover > .sticker,
+  .stickers .sticker:hover { transform: rotate(0deg) scale(1.06); }
+}
+
+@media (max-width: 30em) {
+  .desk__item { grid-template-columns: 4.25rem minmax(0, 1fr); gap: 1rem; }
+  .stickers { gap: 1.1rem; }
+  .stickers .sticker { width: 3.75rem; }
+  .stickers .sticker--scarf { width: 4.75rem; }
+}
 .note--desk { margin-top: 2.5rem; }
 
 @media (min-width: 52em) {
@@ -803,5 +867,5 @@ a:hover { text-decoration-color: var(--pen); text-decoration-thickness: 2px; }
   .sky__meteor { display: none; }
   .lightbox[open] .lightbox__frame { animation: none; }
   .js .develop img { filter: none; }
-  .snap, .window { transition: none; }
+  .snap, .window, .sticker { transition: none; }
 }
